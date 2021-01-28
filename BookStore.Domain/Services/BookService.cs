@@ -1,4 +1,6 @@
-﻿using BookStore.DAL.Repositories;
+﻿using AutoMapper;
+using BookStore.DAL.Entities;
+using BookStore.DAL.Repositories;
 using BookStore.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -20,19 +22,20 @@ namespace BookStore.Domain.Services
     public class BookService : IBookService
     {
         private readonly IBookRepository _genreRepository;
-        //private readonly IMapper _mapper;
+        private readonly IMapper _mapper;
 
         public BookService(IBookRepository genreRepository)
         {
             _genreRepository = genreRepository;
 
-            /*var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile<BLAutoMapperProfile>());
-            _mapper = new Mapper(mapperConfig);*/
+            var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile<BLAutoMapperProfile>());
+            _mapper = new Mapper(mapperConfig);
         }
 
         public void Create(BookModel model)
         {
-            throw new NotImplementedException();
+            var book = _mapper.Map<Book>(model);
+            _genreRepository.Create(book);
         }
 
         public void Delete(int id)
