@@ -21,7 +21,7 @@ namespace BookStore.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("BookStoreUsers", throwIfV1Schema: false)
         {
         }
 

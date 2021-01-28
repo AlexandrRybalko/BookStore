@@ -192,6 +192,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202101281054176_Initial_Create.cs" />
+    <Compile Include="Migrations\202101281054176_Initial_Create.Designer.cs">
+      <DependentUpon>202101281054176_Initial_Create.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BookViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -278,6 +283,11 @@
       <Project>{a59d05a6-0f59-4ccd-b58c-95b0bf97d4a3}</Project>
       <Name>BookStore.Domain</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202101281054176_Initial_Create.resx">
+      <DependentUpon>202101281054176_Initial_Create.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
