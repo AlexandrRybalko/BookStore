@@ -1,10 +1,9 @@
-﻿using BookStore.DAL;
-using BookStore.DAL.Repositories;
-using LightInject;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 
-namespace BookStore.Domain.Models
+namespace BookStore.Models
 {
     public class BookModel
     {
@@ -14,8 +13,7 @@ namespace BookStore.Domain.Models
         public decimal Price { get; set; }
 
         public ICollection<AuthorModel> Authors { get; set; }
-        public int GenreId { get; set; }
-        public GenreModel Genre { get; set; }
+        public ICollection<GenreModel> Genres { get; set; }
         public ICollection<OrderModel> Orders { get; set; }
     }
 }

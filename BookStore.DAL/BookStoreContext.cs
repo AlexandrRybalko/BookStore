@@ -29,7 +29,7 @@ namespace BookStore.DAL
                 .WithMany(x => x.Books);
 
             modelBuilder.Entity<Book>()
-                .HasRequired(x => x.Genre)
+                .HasMany(x => x.Genres)
                 .WithMany(x => x.Books);
 
             modelBuilder.Entity<Book>()

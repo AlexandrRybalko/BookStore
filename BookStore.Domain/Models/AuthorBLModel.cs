@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace BookStore.Domain.Models
 {
-    public class OrderModel
+    public class AuthorBLModel
     {
         public int Id { get; set; }
-        public string UserId { get; set; }
-        public DateTime CreatedDate { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
 
-        public ICollection<BookModel> Books { get; set; }
+        public ICollection<BookBLModel> Books { get; set; }
     }
 }

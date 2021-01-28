@@ -12,8 +12,8 @@ namespace BookStore.App_Start
     {
         public WebAutoMapperProfile()
         {
-            CreateMap<BookViewModel, BookModel>();
-            CreateMap<BookViewModel, BookModel>().ReverseMap();
+            CreateMap<BookModel, BookModel>();
+            CreateMap<BookModel, BookModel>().ReverseMap();
 
             
         }

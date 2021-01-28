@@ -20,7 +20,7 @@ namespace BookStore.DAL.Repositories
         {
             return _table.Include(x => x.Authors)
                 .Include(x => x.Orders)
-                .Include(x => x.Genre)
+                .Include(x => x.Genres)
                 .ToList();
         }
 

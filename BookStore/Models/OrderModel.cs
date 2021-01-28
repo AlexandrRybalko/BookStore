@@ -5,7 +5,7 @@ using System.Web;
 
 namespace BookStore.Models
 {
-    public class BookViewModel
+    public class OrderModel
     {
     }
 }

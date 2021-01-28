@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace BookStore.Domain.Models
 {
-    public class AuthorModel
+    public class GenreBLModel
     {
         public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string Title { get; set; }
 
-        public ICollection<BookModel> Books { get; set; }
+        public ICollection<BookBLModel> Books { get; set; }
     }
 }

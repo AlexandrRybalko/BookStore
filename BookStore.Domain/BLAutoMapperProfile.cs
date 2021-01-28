@@ -13,8 +13,8 @@ namespace BookStore.Domain
     {
         public BLAutoMapperProfile()
         {
-            CreateMap<Book, BookModel>();
-            CreateMap<Book, BookModel>().ReverseMap();
+            CreateMap<Book, BookBLModel>();
+            CreateMap<Book, BookBLModel>().ReverseMap();
 
         }
     }

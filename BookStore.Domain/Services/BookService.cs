@@ -12,11 +12,11 @@ namespace BookStore.Domain.Services
 {
     public interface IBookService
     {
-        void Create(BookModel model);
-        IEnumerable<BookModel> GetAll();
-        BookModel GetById(int id);
+        void Create(BookBLModel model);
+        IEnumerable<BookBLModel> GetAll();
+        BookBLModel GetById(int id);
         void Delete(int id);
-        void Update(BookModel model);
+        void Update(BookBLModel model);
     }
 
     public class BookService : IBookService
@@ -32,7 +32,7 @@ namespace BookStore.Domain.Services
             _mapper = new Mapper(mapperConfig);
         }
 
-        public void Create(BookModel model)
+        public void Create(BookBLModel model)
         {
             var book = _mapper.Map<Book>(model);
             _genreRepository.Create(book);
@@ -43,17 +43,17 @@ namespace BookStore.Domain.Services
             throw new NotImplementedException();
         }
 
-        public IEnumerable<BookModel> GetAll()
+        public IEnumerable<BookBLModel> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public BookModel GetById(int id)
+        public BookBLModel GetById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(BookModel model)
+        public void Update(BookBLModel model)
         {
             throw new NotImplementedException();
         }

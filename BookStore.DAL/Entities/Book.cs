@@ -15,8 +15,7 @@ namespace BookStore.DAL.Entities
         public decimal Price { get; set; }
 
         public ICollection<Author> Authors { get; set; }
-        public int GenreId { get; set; }
-        public Genre Genre { get; set; }
+        public ICollection<Genre> Genres { get; set; }
         public ICollection<Order> Orders { get; set; }
     }
 }
