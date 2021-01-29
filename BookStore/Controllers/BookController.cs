@@ -30,7 +30,10 @@ namespace BookStore.Controllers
         // GET: Book
         public ActionResult Index()
         {
-            return View();
+            var books = _bookService.GetAll();
+            var bookModels = _mapper.Map<IEnumerable<BookModel>>(books);
+
+            return View(bookModels);
         }
     }
 }

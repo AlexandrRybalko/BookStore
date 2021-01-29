@@ -1,0 +1,59 @@
+﻿@model BookStore.Models.BookModel
+
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        @*<dt>
+            Authors
+        </dt>
+
+        <dd>
+            @{
+                foreach (var author in Model.Authors)
+                {
+                    <span>@author.FirstName @author.LastName</span>
+                }
+            }
+        </dd>
+
+        <dt>
+            Genres
+        </dt>
+
+        <dd>
+            @{
+                foreach (var genre in Model.Genres)
+                {
+                    <span>@genre.Title</span>
+                }
+              }
+        </dd>
+
+        <dt>
+            Publication date
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateOfPublication)
+        </dd>*@
+
+
+    </dl>
+</div>

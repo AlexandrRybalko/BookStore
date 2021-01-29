@@ -12,10 +12,14 @@ namespace BookStore.App_Start
     {
         public WebAutoMapperProfile()
         {
-            CreateMap<BookModel, BookModel>();
-            CreateMap<BookModel, BookModel>().ReverseMap();
+            CreateMap<BookBLModel, BookModel>();
+            CreateMap<BookBLModel, BookModel>().ReverseMap();
 
-            
+            CreateMap<AuthorBLModel, AuthorModel>();
+            CreateMap<AuthorBLModel, AuthorModel>().ReverseMap();
+
+            CreateMap<GenreBLModel, GenreModel>();
+            CreateMap<GenreBLModel, GenreModel>().ReverseMap();
         }
     }
 }

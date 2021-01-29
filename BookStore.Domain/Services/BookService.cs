@@ -45,7 +45,10 @@ namespace BookStore.Domain.Services
 
         public IEnumerable<BookBLModel> GetAll()
         {
-            throw new NotImplementedException();
+            var books = _genreRepository.GetAll();
+            var result = _mapper.Map<IEnumerable<BookBLModel>>(books);
+
+            return result;
         }
 
         public BookBLModel GetById(int id)

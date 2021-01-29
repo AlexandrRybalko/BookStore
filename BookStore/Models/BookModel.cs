@@ -14,6 +14,6 @@ namespace BookStore.Models
 
         public ICollection<AuthorModel> Authors { get; set; }
         public ICollection<GenreModel> Genres { get; set; }
-        public ICollection<OrderModel> Orders { get; set; }
+
     }
 }
