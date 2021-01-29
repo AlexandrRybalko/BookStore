@@ -4,12 +4,13 @@
 
     <hr />
     <dl class="dl-horizontal">
+        @Html.HiddenFor(model => model.Id)
         <dt>
             @Html.DisplayNameFor(model => model.Title)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Title)
+            <a href="Book/Book/@Model.Id">@Model.Title</a>
         </dd>
 
         <dt>
@@ -19,41 +20,5 @@
         <dd>
             @Html.DisplayFor(model => model.Price)
         </dd>
-
-        @*<dt>
-            Authors
-        </dt>
-
-        <dd>
-            @{
-                foreach (var author in Model.Authors)
-                {
-                    <span>@author.FirstName @author.LastName</span>
-                }
-            }
-        </dd>
-
-        <dt>
-            Genres
-        </dt>
-
-        <dd>
-            @{
-                foreach (var genre in Model.Genres)
-                {
-                    <span>@genre.Title</span>
-                }
-              }
-        </dd>
-
-        <dt>
-            Publication date
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateOfPublication)
-        </dd>*@
-
-
     </dl>
 </div>

@@ -24,6 +24,14 @@ namespace BookStore.DAL.Repositories
                 .ToList();
         }
 
+        public override Book GetById(int id)
+        {
+            return _table.Include(x => x.Authors)
+                .Include(x => x.Genres)
+                .Include(x => x.Authors)
+                .FirstOrDefault(x => x.Id == id);
+        }
+
         public override void Update(Book model)
         {
             var book = GetById(model.Id);

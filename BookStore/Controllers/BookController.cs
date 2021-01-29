@@ -35,5 +35,13 @@ namespace BookStore.Controllers
 
             return View(bookModels);
         }
+
+        public ActionResult Book(int id)
+        {
+            var book = _bookService.GetById(id);
+            var bookModel = _mapper.Map<BookModel>(book);
+
+            return View(bookModel);
+        }
     }
 }

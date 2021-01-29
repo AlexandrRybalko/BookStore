@@ -40,10 +40,7 @@ namespace BookStore.DAL.Repositories
 
         public abstract IEnumerable<T> GetAll();
 
-        public T GetById(int id)
-        {
-            return _table.FirstOrDefault(x => x.Id == id);
-        }
+        public abstract T GetById(int id);
 
         public abstract void Update(T model);
     }

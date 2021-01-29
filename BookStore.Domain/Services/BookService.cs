@@ -53,7 +53,10 @@ namespace BookStore.Domain.Services
 
         public BookBLModel GetById(int id)
         {
-            throw new NotImplementedException();
+            var book = _genreRepository.GetById(id);
+            var result = _mapper.Map<BookBLModel>(book);
+
+            return result;
         }
 
         public void Update(BookBLModel model)
