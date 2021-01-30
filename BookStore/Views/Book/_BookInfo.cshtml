@@ -10,7 +10,7 @@
         </dt>
 
         <dd>
-            <a href="Book/Book/@Model.Id">@Model.Title</a>
+            @Html.ActionLink(Model.Title, "GetById", new { id = Model.Id })
         </dd>
 
         <dt>
@@ -20,5 +20,7 @@
         <dd>
             @Html.DisplayFor(model => model.Price)
         </dd>
+
+        @Html.ActionLink("Add to cart", "AddToCart", new { id = Model.Id})
     </dl>
 </div>

@@ -17,6 +17,8 @@ namespace BookStore.Controllers
             return View();
         }
 
+        
+
 
 
         //    //getdata from cookie

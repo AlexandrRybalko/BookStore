@@ -3,6 +3,7 @@ using BookStore.App_Start;
 using BookStore.Domain.Models;
 using BookStore.Domain.Services;
 using BookStore.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ using System.Web.Mvc;
 
 namespace BookStore.Controllers
 {
+    [AllowAnonymous]
     public class BookController : Controller
     {
         private readonly IBookService _bookService;
@@ -36,7 +38,7 @@ namespace BookStore.Controllers
             return View(bookModels);
         }
 
-        public ActionResult Book(int id)
+        public ActionResult GetById(int id)
         {
             var book = _bookService.GetById(id);
             var bookModel = _mapper.Map<BookModel>(book);
