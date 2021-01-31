@@ -268,10 +268,11 @@
     <Content Include="Views\Book\_BookInfo.cshtml" />
     <Content Include="Views\Book\Index.cshtml" />
     <Content Include="Views\Book\Book.cshtml" />
+    <Content Include="Views\Cart\Index.cshtml" />
+    <Content Include="Views\Cart\_ItemInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Cart\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

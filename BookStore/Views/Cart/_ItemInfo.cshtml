@@ -9,7 +9,7 @@
         </dt>
 
         <dd>
-            @Html.ActionLink(Model.Title, "GetById", new { id = Model.Id })
+            @Html.ActionLink(Model.Title, "GetById", "Book", new { id = Model.Id }, null)
         </dd>
 
         <dt>
@@ -20,6 +20,6 @@
             @Html.DisplayFor(model => model.Price)
         </dd>
 
-        @Html.ActionLink("Add to cart", "AddToCart", "Cart", new { id = Model.Id }, null)
+        @Html.ActionLink("Remove from cart", "RemoveFromCart", "Cart", new { id = Model.Id }, null)
     </dl>
 </div>
