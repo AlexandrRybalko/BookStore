@@ -23,12 +23,7 @@ namespace BookStore.DAL.Repositories
             _table = _ctx.Set<T>();
         }
 
-        public void Create(T model)
-        {
-            _table.Add(model);
-
-            _ctx.SaveChanges();
-        }
+        public abstract void Create(T model);
 
         public void Delete(int id)
         {

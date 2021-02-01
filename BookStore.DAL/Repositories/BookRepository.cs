@@ -16,6 +16,12 @@ namespace BookStore.DAL.Repositories
 
     public class BookRepository : GenericRepository<Book>, IBookRepository
     {
+        public override void Create(Book model)
+        {
+            _table.Add(model);
+            _ctx.SaveChanges();
+        }
+
         public override IEnumerable<Book> GetAll()
         {
             return _table.Include(x => x.Authors)

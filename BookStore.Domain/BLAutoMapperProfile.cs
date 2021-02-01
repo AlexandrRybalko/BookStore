@@ -22,6 +22,9 @@ namespace BookStore.Domain
             CreateMap<Author, AuthorBLModel>();
             CreateMap<Author, AuthorBLModel>().ReverseMap();
 
+            CreateMap<Order, OrderBLModel>();
+            CreateMap<Order, OrderBLModel>().ReverseMap();
+
         }
     }
 }

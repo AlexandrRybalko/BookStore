@@ -16,6 +16,11 @@ namespace BookStore.DAL.Repositories
 
     public class GenreRepository : GenericRepository<Genre>, IGenreRepository
     {
+        public override void Create(Genre model)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public override IEnumerable<Genre> GetAll()
         {
             return _table.Include(x => x.Books).ToList();

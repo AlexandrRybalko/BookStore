@@ -19,7 +19,6 @@
         <dd>
             @Html.DisplayFor(model => model.Price)
         </dd>
-
-        @Html.ActionLink("Add to cart", "AddToCart", "Cart", new { id = Model.Id }, null)
     </dl>
+    <input id="@Model.Id" type="button" value="Add to cart" onclick="addToCart()" />
 </div>

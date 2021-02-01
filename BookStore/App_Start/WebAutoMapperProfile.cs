@@ -20,6 +20,9 @@ namespace BookStore.App_Start
 
             CreateMap<GenreBLModel, GenreModel>();
             CreateMap<GenreBLModel, GenreModel>().ReverseMap();
+
+            CreateMap<OrderBLModel, OrderModel>();
+            CreateMap<OrderBLModel, OrderModel>().ReverseMap();
         }
     }
 }

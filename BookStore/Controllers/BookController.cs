@@ -43,7 +43,16 @@ namespace BookStore.Controllers
             var book = _bookService.GetById(id);
             var bookModel = _mapper.Map<BookModel>(book);
 
-            return View(bookModel);
+            return View("/Views/Book/Book.cshtml", bookModel);
         }
+
+
+        /*[Authorize(Roles = "user")]
+        public ActionResult GetMyBooks(string userId)
+        {
+            var myBooks = _
+
+            return View();
+        }*/
     }
 }

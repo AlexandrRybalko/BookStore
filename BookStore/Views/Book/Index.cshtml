@@ -2,9 +2,11 @@
 @{
     ViewBag.Title = "View";
 }
+@section scripts{
+    @Scripts.Render("~/bundles/cart")
+}
 
-@foreach(var book in Model)
+@foreach (var book in Model)
 {
     Html.RenderPartial("/Views/Book/_BookInfo.cshtml", book);
 }
-

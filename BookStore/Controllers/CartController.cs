@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using BookStore.Domain.Models;
 
 namespace BookStore.Controllers
 {
@@ -15,11 +17,13 @@ namespace BookStore.Controllers
     public class CartController : Controller
     {
         private readonly IBookService _bookService;
+        private readonly IOrderService _orderService;
         private readonly IMapper _mapper;
 
-        public CartController(IBookService bookService)
+        public CartController(IBookService bookService, IOrderService orderService)
         {
             _bookService = bookService;
+            _orderService = orderService;
             var mapperConfig = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile<WebAutoMapperProfile>();
@@ -28,76 +32,100 @@ namespace BookStore.Controllers
         }
 
         // GET: Cart
+        [AllowAnonymous]
         public ActionResult Index()
         {
-            var cookieValue = Request.Cookies["books"].Value;
-            string[] jsonBooks = cookieValue.Split(' ');
-            var books = new List<BookModel>();
-            for(int i = 0; i < jsonBooks.Length; i++)
+            if (Request.Cookies["books"] == null || String.IsNullOrEmpty(Request.Cookies["books"].Value))
             {
-                var deserializedBook = JsonConvert.DeserializeObject<BookModel>(jsonBooks[i]);
-                books.Add(deserializedBook);
+                return View("/Views/Cart/Empty.cshtml");
             }
 
-            return View(books);
+            string[] cookieValues = Request.Cookies["books"].Value.Split('d');
+            List<int> ids = new List<int>();
+            for (int i = 0; i < cookieValues.Length; i++)
+            {
+                ids.Add(int.Parse(cookieValues[i]));
+            }
+            var books = _bookService.GetAll().Where(x => ids.Contains(x.Id));
+            var bookModels = _mapper.Map<IEnumerable<BookModel>>(books);
+
+            return View(bookModels);
         }
 
-        public ActionResult AddToCart(int id)
+
+        public JsonResult AddToCart(int id)
         {
             var booksCookie = Request.Cookies.Get("books");
-            var book = _bookService.GetById(id);
-            var bookModel = _mapper.Map<BookModel>(book);
-            string jsonBook = JsonConvert.SerializeObject(bookModel);
-            if (booksCookie == null)
+            if (Request.Cookies.Get("books") == null)
             {
-                Response.Cookies["books"].Value = jsonBook;
+                Response.Cookies["books"].Value = $"{id}";
                 Response.Cookies["books"].HttpOnly = true;
-
-                return RedirectToAction("Index", "Book");
             }
-            StringBuilder sb = new StringBuilder();
-            sb.Append(booksCookie.Value);
-            sb.Append($" {jsonBook}");
-            Response.Cookies["books"].Value = sb.ToString();
-
-            /*var booksCookie = Request.Cookies.Get("books");
-            if(booksCookie == null)
+            else
             {
-                Response.Cookies["books"].Value = id.ToString();
-                Response.Cookies["books"].HttpOnly = true;
-
-                return RedirectToAction("Index", "Book");
+                if (Request.Cookies.Get("books").Value.Contains($"{id}"))
+                {
+                    return Json(new { result = "The item has been already added" }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append(booksCookie.Value);
+                    sb.Append($"d{id}");
+                    Response.Cookies["books"].Value = sb.ToString();
+                }                
             }
-            StringBuilder sb = new StringBuilder();
-            sb.Append(booksCookie.Value);
-            sb.Append($" {id}");
-            Response.Cookies["books"].Value = sb.ToString();*/
 
-            return RedirectToAction("Index", "Book");
+            return Json(new { result = "Item added" }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult RemoveFromCart(int id)
         {
-            var cookieValue = Request.Cookies["books"].Value;
-            string[] jsonBooks = cookieValue.Split(' ');
-            var books = new List<BookModel>();
-            for (int i = 0; i < jsonBooks.Length; i++)
-            {
-                var deserializedBook = JsonConvert.DeserializeObject<BookModel>(jsonBooks[i]);
-                books.Add(deserializedBook);
-            }
-            books.Remove(books.FirstOrDefault(x => x.Id == id));
+            var cookieValue = Request.Cookies["books"].Value.Split('d');
             StringBuilder sb = new StringBuilder();
-            foreach(var book in books)
+            for (int i = 1; i < cookieValue.Length; i++)
             {
-                sb.Append(JsonConvert.SerializeObject(book) + " ");
+                if(cookieValue[i] != id.ToString())
+                {
+                    sb.Append($"{cookieValue[i]}d");
+                }
+            }
+            if(sb.Length >= 1)
+            {
+                sb.Length--;
             }
             Response.Cookies["books"].Value = sb.ToString();
 
             return RedirectToAction("Index", "Cart");
         }
 
+        public void ClearCart()
+        {
+            if (Request.Cookies["books"] != null)
+            {
+                Response.Cookies["books"].Expires = DateTime.Now.AddDays(-1);
+            }
+        }
 
+        public ActionResult CreateOrder()
+        {
+            string[] booksIds = Request.Cookies["books"].Values["ids"].Split(' ');
+            List<int> ids = new List<int>();
+            for(int i = 0; i < booksIds.Length; i++)
+            {
+                ids.Add(int.Parse(booksIds[i]));
+            }
+
+            var books = _bookService.GetAll().Where(x => ids.Contains(x.Id));
+            var bookModels = _mapper.Map<IEnumerable<BookModel>>(books);
+            var orderModel = new OrderModel { CreatedDate = DateTime.Now, UserId = User.Identity.GetUserId(), Books = bookModels };
+            var order = _mapper.Map<OrderBLModel>(orderModel);
+            _orderService.Create(order);
+            ClearCart();
+
+            return RedirectToAction("Index", "Book");
+        }
+    }
 
         //    //getdata from cookie
         //    var books = Request.Cookies.Get("bookIds");
@@ -109,5 +137,4 @@ namespace BookStore.Controllers
 
         //    Response.Cookies.Add(respCoockies);
 
-    }
 }

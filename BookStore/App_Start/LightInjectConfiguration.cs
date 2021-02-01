@@ -27,6 +27,7 @@ namespace BookStore.App_Start
             container = BLLightInjectConfiguration.Configuration(container);
 
             container.Register<IBookService, BookService>();
+            container.Register<IOrderService, OrderService>();
             //container.Register<IAuthorService, AuthorService>();
             //container.Register<IEmailService, EmailService>();
             //container.Register<IArticleApiService, ArticleApiService>();

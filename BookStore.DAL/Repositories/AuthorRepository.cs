@@ -17,6 +17,11 @@ namespace BookStore.DAL.Repositories
 
     public class AuthorRepository : GenericRepository<Author>, IAuthorRepository
     {
+        public override void Create(Author model)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public override IEnumerable<Author> GetAll()
         {
             return _table.Include(x => x.Books).ToList();
