@@ -11,6 +11,8 @@ namespace BookStore.Models
         public string Title { get; set; }
         public DateTime DateOfPublication { get; set; }
         public decimal Price { get; set; }
+        public string FilePath { get; set; }
+        public string Description { get; set; }
 
         public ICollection<AuthorModel> Authors { get; set; }
         public ICollection<GenreModel> Genres { get; set; }

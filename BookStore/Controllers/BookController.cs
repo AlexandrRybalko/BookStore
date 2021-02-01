@@ -3,6 +3,7 @@ using BookStore.App_Start;
 using BookStore.Domain.Models;
 using BookStore.Domain.Services;
 using BookStore.Models;
+using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -16,11 +17,13 @@ namespace BookStore.Controllers
     public class BookController : Controller
     {
         private readonly IBookService _bookService;
+        private readonly IOrderService _orderService;
         private readonly IMapper _mapper;
 
-        public BookController(IBookService bookService)
+        public BookController(IBookService bookService, IOrderService orderService)
         {
             _bookService = bookService;
+            _orderService = orderService;
 
             var mapperConfig = new MapperConfiguration(cfg =>
             {
@@ -47,12 +50,13 @@ namespace BookStore.Controllers
         }
 
 
-        /*[Authorize(Roles = "user")]
-        public ActionResult GetMyBooks(string userId)
+        [Authorize(Roles = "user")]
+        public ActionResult GetMyBooks()
         {
-            var myBooks = _
+            var myBooks = _bookService.GetMyBooks(User.Identity.GetUserId());
+            var model = _mapper.Map<IEnumerable<BookModel>>(myBooks);
 
-            return View();
-        }*/
+            return View("/Views/Book/MyBooks.cshtml", model);
+        }
     }
 }

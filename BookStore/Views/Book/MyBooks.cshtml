@@ -1,0 +1,10 @@
+﻿@model IEnumerable<BookStore.Models.BookModel>
+@{
+    ViewBag.Title = "MyBooks";
+}
+
+@foreach (var book in Model)
+{
+    Html.RenderPartial("/Views/Book/_MyBook.cshtml", book);
+}
+

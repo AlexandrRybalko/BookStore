@@ -17,16 +17,19 @@ namespace BookStore.Domain.Services
         BookBLModel GetById(int id);
         void Delete(int id);
         void Update(BookBLModel model);
+        IEnumerable<BookBLModel> GetMyBooks(string userId);
     }
 
     public class BookService : IBookService
     {
-        private readonly IBookRepository _genreRepository;
+        private readonly IBookRepository _bookRepository;
+        private readonly IOrderRepository _orderRepository;
         private readonly IMapper _mapper;
 
-        public BookService(IBookRepository genreRepository)
+        public BookService(IBookRepository genreRepository, IOrderRepository orderRepository)
         {
-            _genreRepository = genreRepository;
+            _bookRepository = genreRepository;
+            _orderRepository = orderRepository;
 
             var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile<BLAutoMapperProfile>());
             _mapper = new Mapper(mapperConfig);
@@ -35,7 +38,7 @@ namespace BookStore.Domain.Services
         public void Create(BookBLModel model)
         {
             var book = _mapper.Map<Book>(model);
-            _genreRepository.Create(book);
+            _bookRepository.Create(book);
         }
 
         public void Delete(int id)
@@ -45,7 +48,7 @@ namespace BookStore.Domain.Services
 
         public IEnumerable<BookBLModel> GetAll()
         {
-            var books = _genreRepository.GetAll();
+            var books = _bookRepository.GetAll();
             var result = _mapper.Map<IEnumerable<BookBLModel>>(books);
 
             return result;
@@ -53,10 +56,21 @@ namespace BookStore.Domain.Services
 
         public BookBLModel GetById(int id)
         {
-            var book = _genreRepository.GetById(id);
+            var book = _bookRepository.GetById(id);
             var result = _mapper.Map<BookBLModel>(book);
 
             return result;
+        }
+
+        public IEnumerable<BookBLModel> GetMyBooks(string userId)
+        {
+            var bookIds = _orderRepository.GetAll()
+                .Where(x => x.UserId == userId)
+                .SelectMany(x => x.Books.Select(y => y.Id))
+                .ToList();
+            var myBooks = _bookRepository.GetAll().Where(x => bookIds.Contains(x.Id));
+
+            return _mapper.Map<IEnumerable<BookBLModel>>(myBooks);
         }
 
         public void Update(BookBLModel model)

@@ -271,6 +271,8 @@
     <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Views\Cart\_ItemInfo.cshtml" />
     <Content Include="Views\Cart\Empty.cshtml" />
+    <Content Include="Views\Book\MyBooks.cshtml" />
+    <Content Include="Views\Book\_MyBook.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

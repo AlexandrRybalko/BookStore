@@ -56,6 +56,11 @@ namespace BookStore.Controllers
         public JsonResult AddToCart(int id)
         {
             var booksCookie = Request.Cookies.Get("books");
+            var a = _bookService.GetMyBooks(User.Identity.GetUserId()).Select(x => x.Id);
+            if (a.Contains(id))
+            {
+                return Json(new { result = "You have already bought this book" }, JsonRequestBehavior.AllowGet);
+            }
             if (Request.Cookies.Get("books") == null)
             {
                 Response.Cookies["books"].Value = $"{id}";
@@ -93,8 +98,12 @@ namespace BookStore.Controllers
             if(sb.Length >= 1)
             {
                 sb.Length--;
+                Response.Cookies["books"].Value = sb.ToString();
             }
-            Response.Cookies["books"].Value = sb.ToString();
+            else
+            {
+                ClearCart();
+            }
 
             return RedirectToAction("Index", "Cart");
         }
@@ -107,9 +116,11 @@ namespace BookStore.Controllers
             }
         }
 
+        [HttpPost]
+        [Authorize(Roles = "user")]
         public ActionResult CreateOrder()
         {
-            string[] booksIds = Request.Cookies["books"].Values["ids"].Split(' ');
+            string[] booksIds = Request.Cookies["books"].Value.Split('d');
             List<int> ids = new List<int>();
             for(int i = 0; i < booksIds.Length; i++)
             {

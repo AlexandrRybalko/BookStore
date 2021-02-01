@@ -13,6 +13,8 @@ namespace BookStore.DAL.Entities
         public string Title { get; set; }
         public DateTime DateOfPublication { get; set; }
         public decimal Price { get; set; }
+        public string FilePath { get; set; }
+        public string Description { get; set; }
 
         public ICollection<Author> Authors { get; set; }
         public ICollection<Genre> Genres { get; set; }
